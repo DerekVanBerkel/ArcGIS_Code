@@ -1,0 +1,21 @@
+import os  
+import arcpy  
+import arcpy
+from arcpy import env
+from arcpy.sa import *
+
+
+# Set the workspace dirpath   
+
+dirpath = 'E:\MegaRuns\E2\\run'  
+reclassField = "Value"
+remap = RemapValue([[0,1], [1,0]])
+
+
+# loop through the list of raster files  
+for numb in range(0, 51):  
+	arcpy.env.workspace = dirpath + str(numb)   
+	rasterList = arcpy.ListRasters() 
+ 	for inRaster in rasterList:
+		outReclassify = Reclassify(inRaster, reclassField, remap, "DATA")
+		outReclassify.save(dirpath + str(numb)+'\\reclass'+ str(numb)+'.tif')
